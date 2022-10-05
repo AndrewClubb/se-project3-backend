@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-  const Course = sequelize.define("course", {
+  const Room = sequelize.define("room", {
     id: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
@@ -10,23 +10,14 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
       allowNull: false
     },    
-    name: {
-      type: Sequelize.STRING,
+    capacity: {
+      type: Sequelize.INTEGER,
       allowNull: false
-    },
-    description: {
-      type: Sequelize.STRING
-    },
-    hours: {
-      type: Sequelize.INTEGER
-    },
-    level: {
-      type: Sequelize.INTEGER
     },
   },
   {
     timestamps: false
   });
 
-  return Course;
+  return Room;
 };
