@@ -1,32 +1,23 @@
 module.exports = (sequelize, Sequelize) => {
-  const Course = sequelize.define("course", {
+  const SpecialList = sequelize.define("specialList", {
     id: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
       primaryKey: true,
       unique: true
-    },    
-    number: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },    
-    name: {
+    },
+    email: {
       type: Sequelize.STRING,
       allowNull: false
     },
-    description: {
-      type: Sequelize.STRING
-    },
-    hours: {
-      type: Sequelize.INTEGER
-    },
-    level: {
-      type: Sequelize.INTEGER
+    role: {
+      type: Sequelize.STRING,
+      allowNull: false
     },
   },
   {
     timestamps: false
   });
 
-  return Course;
+  return SpecialList;
 };
