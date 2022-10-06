@@ -45,7 +45,7 @@ exports.create = (req, res) => {
 };
 
 // Retrieve all Courses from the database
-exports.findAllCourses = (req, res) => {
+exports.findAll = (req, res) => {
   Course.findAll()
     .then(data => {
       res.send(data);
@@ -59,7 +59,7 @@ exports.findAllCourses = (req, res) => {
 };
 
 // Retrieve a single Course with an id
-exports.findCourseById = (req, res) => {
+exports.findById = (req, res) => {
   const id = req.params.id;
   Course.findByPk(id)
     .then(data => {
