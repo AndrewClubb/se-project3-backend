@@ -1,17 +1,17 @@
 module.exports = app => {
-    const course = require("../controllers/course.controller.js");
+    const facultySection = require("../controllers/facultySection.controller.js");
     var router = require("express").Router();
 
-    // Create a new course
-    router.post("/", course.create);
-    // Retrieve all courses
-    router.get("/", course.findAllCourses);
-    // Retrieve a single course with id
-    router.get("/id/:id", course.findCourseById);
-    // Update a course with id
-    router.put("/:id", course.update);
-    // Delete a course with id
-    router.delete("/:id", course.delete);
+    // Create a new facultySection
+    router.post("/", facultySection.create);
+    // Retrieve all facultySections
+    router.get("/", facultySection.findAll);
+    // Retrieve a single facultySection with id
+    router.get("/:id", facultySection.findById);
+    // Update a facultySection with id
+    router.put("/:id", facultySection.update);
+    // Delete a facultySection with id
+    router.delete("/:id", facultySection.delete);
 
-    app.use('/schedule-t2/course', router);
+    app.use('/schedule-t2/facultySection', router);
 };

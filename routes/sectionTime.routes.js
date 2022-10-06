@@ -1,17 +1,17 @@
 module.exports = app => {
-    const course = require("../controllers/course.controller.js");
+    const sectionTime = require("../controllers/sectionTime.controller.js");
     var router = require("express").Router();
 
-    // Create a new course
-    router.post("/", course.create);
-    // Retrieve all courses
-    router.get("/", course.findAllCourses);
-    // Retrieve a single course with id
-    router.get("/id/:id", course.findCourseById);
-    // Update a course with id
-    router.put("/:id", course.update);
-    // Delete a course with id
-    router.delete("/:id", course.delete);
+    // Create a new sectionTime
+    router.post("/", sectionTime.create);
+    // Retrieve all sectionTimes
+    router.get("/", sectionTime.findAll);
+    // Retrieve a single sectionTime with id
+    router.get("/:id", sectionTime.findById);
+    // Update a sectionTime with id
+    router.put("/:id", sectionTime.update);
+    // Delete a sectionTime with id
+    router.delete("/:id", sectionTime.delete);
 
-    app.use('/schedule-t2/course', router);
+    app.use('/schedule-t2/sectionTime', router);
 };
