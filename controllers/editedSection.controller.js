@@ -1,38 +1,15 @@
 const db = require("../models");
 const { Op } = require("sequelize");
-const Course = db.course;
+const EditedSection = db.editedSection;
 
 // Create and Save a new Tutorial
 exports.create = (req, res) => {
-  // Validate request
-  if (!req.body.dept) {
-    res.status(400).send({
-      message: "Dept can not be empty!"
-    });
-    return;
-  } else if (!req.body.courseNumber) {
-    res.status(400).send({
-      message: "courseNumber can not be empty!"
-    });
-    return;
-  } else if (!req.body.name) {
-    res.status(400).send({
-      message: "Name can not be empty!"
-    });
-    return;
-  }
-  
-  const course = {
-    dept: req.body.dept,
-    courseNumber: req.body.courseNumber,
-    level: req.body.level,
-    hours: req.body.hours,
-    name: req.body.name,
-    description: req.body.description
+  const editedSection = {
+    sectionId: req.params.sectionId
   };
 
   // Create and Save a new Course
-  Course.create(course)
+  EditedSection.create(editedSection)
     .then(data => {
       res.send(data);
     })
@@ -46,7 +23,7 @@ exports.create = (req, res) => {
 
 // Retrieve all Courses from the database
 exports.findAll = (req, res) => {
-  Course.findAll()
+  EditedSection.findAll()
     .then(data => {
       res.send(data);
     })
@@ -61,7 +38,7 @@ exports.findAll = (req, res) => {
 // Retrieve a single Course with an id
 exports.findById = (req, res) => {
   const id = req.params.id;
-  Course.findByPk(id)
+  EditedSection.findByPk(id)
     .then(data => {
       if (data) {
         res.send(data);
@@ -81,7 +58,7 @@ exports.findById = (req, res) => {
 // Update a Course by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
-  Course.update(req.body, {
+  EditedSection.update(req.body, {
     where: { id: id }
   })
   .then(num => {
@@ -105,7 +82,7 @@ exports.update = (req, res) => {
 // Delete a Course with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
-  Course.destroy({
+  EditedSection.destroy({
     where: { id: id }
   })
   .then(num => {

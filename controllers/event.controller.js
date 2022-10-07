@@ -1,38 +1,17 @@
 const db = require("../models");
 const { Op } = require("sequelize");
-const Course = db.course;
+const Event = db.event;
 
 // Create and Save a new Tutorial
 exports.create = (req, res) => {
-  // Validate request
-  if (!req.body.dept) {
-    res.status(400).send({
-      message: "Dept can not be empty!"
-    });
-    return;
-  } else if (!req.body.courseNumber) {
-    res.status(400).send({
-      message: "courseNumber can not be empty!"
-    });
-    return;
-  } else if (!req.body.name) {
-    res.status(400).send({
-      message: "Name can not be empty!"
-    });
-    return;
-  }
-  
-  const course = {
-    dept: req.body.dept,
-    courseNumber: req.body.courseNumber,
-    level: req.body.level,
-    hours: req.body.hours,
-    name: req.body.name,
-    description: req.body.description
+  const event = {
+    facultyId: req.params.facultyId,
+    semesterId: req.params.semesterId,
+    roomId: req.params.roomId
   };
 
   // Create and Save a new Course
-  Course.create(course)
+  Event.create(event)
     .then(data => {
       res.send(data);
     })
@@ -46,7 +25,7 @@ exports.create = (req, res) => {
 
 // Retrieve all Courses from the database
 exports.findAll = (req, res) => {
-  Course.findAll()
+  Event.findAll()
     .then(data => {
       res.send(data);
     })
@@ -61,7 +40,7 @@ exports.findAll = (req, res) => {
 // Retrieve a single Course with an id
 exports.findById = (req, res) => {
   const id = req.params.id;
-  Course.findByPk(id)
+  Event.findByPk(id)
     .then(data => {
       if (data) {
         res.send(data);
@@ -81,7 +60,7 @@ exports.findById = (req, res) => {
 // Update a Course by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
-  Course.update(req.body, {
+  Event.update(req.body, {
     where: { id: id }
   })
   .then(num => {
@@ -105,7 +84,7 @@ exports.update = (req, res) => {
 // Delete a Course with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
-  Course.destroy({
+  Event.destroy({
     where: { id: id }
   })
   .then(num => {

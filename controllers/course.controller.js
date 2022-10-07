@@ -5,30 +5,24 @@ const Course = db.course;
 // Create and Save a new Tutorial
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.dept) {
+  if (!req.body.number) {
     res.status(400).send({
-      message: "Dept can not be empty!"
-    });
-    return;
-  } else if (!req.body.courseNumber) {
-    res.status(400).send({
-      message: "courseNumber can not be empty!"
+      message: "number can not be empty!"
     });
     return;
   } else if (!req.body.name) {
     res.status(400).send({
-      message: "Name can not be empty!"
+      message: "name can not be empty!"
     });
     return;
   }
   
   const course = {
-    dept: req.body.dept,
-    courseNumber: req.body.courseNumber,
-    level: req.body.level,
-    hours: req.body.hours,
+    number: req.body.number,
     name: req.body.name,
-    description: req.body.description
+    description: req.body.description,
+    hours: req.body.hours,
+    level: req.body.level 
   };
 
   // Create and Save a new Course
