@@ -2,7 +2,7 @@ const db = require("../models");
 const { Op } = require("sequelize");
 const SpecialList = db.specialList;
 
-// Create and Save a new Tutorial
+// Create and Save a new specialList
 exports.create = (req, res) => {
   const course = {
     userId: req.params.userId,
@@ -17,12 +17,12 @@ exports.create = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the Course."
+          err.message || "Some error occurred while creating the specialList."
       });
     });
 };
 
-// Retrieve all Courses from the database
+// Retrieve all specialLists from the database
 exports.findAll = (req, res) => {
   SpecialList.findAll()
     .then(data => {
@@ -31,12 +31,12 @@ exports.findAll = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving Courses."
+          err.message || "Some error occurred while retrieving specialLists."
       });
     });
 };
 
-// Retrieve a single Course with an id
+// Retrieve a single specialList with an id
 exports.findById = (req, res) => {
   const id = req.params.id;
   SpecialList.findByPk(id)
@@ -45,18 +45,18 @@ exports.findById = (req, res) => {
         res.send(data);
       } else {
         res.status(404).send({
-          message: 'Cannot find Course with id=' + id
+          message: 'Cannot find specialList with id=' + id
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: 'Error retrieving Course with id=' + id
+        message: 'Error retrieving specialList with id=' + id
       });
     });
 };
 
-// Update a Course by the id in the request
+// Update a specialList by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
   SpecialList.update(req.body, {
@@ -65,22 +65,22 @@ exports.update = (req, res) => {
   .then(num => {
     if (num == 1) {
       res.send({
-        message: 'Course was updated successfully.'
+        message: 'SpecialList was updated successfully.'
       });
     } else {
       res.send({
-        message: 'Cannot update Course with id=' + id + '. Maybe Course was not found or req.body is empty!'
+        message: 'Cannot update specialList with id=' + id + '. Maybe specialList was not found or req.body is empty!'
       });
     }
   })
   .catch(err => {
     res.status(500).send({
-      message: 'Error updating Course with id=' + id
+      message: 'Error updating specialList with id=' + id
     });
   });
 };
 
-// Delete a Course with the specified id in the request
+// Delete a specialList with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
   SpecialList.destroy({
@@ -89,11 +89,11 @@ exports.delete = (req, res) => {
   .then(num => {
     if (num == 1) {
       res.send({
-        message: 'Course was deleted successfully!'
+        message: 'SpecialList was deleted successfully!'
       });
     } else {
       res.send({
-        message: 'Cannot delete Course with id=${id}. Maybe Course was not found or '
+        message: 'Cannot delete specialList with id=' + id + '. Maybe specialList was not found'
       })
     }
   })
