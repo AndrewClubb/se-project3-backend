@@ -15,7 +15,7 @@ module.exports = (sequelize, Sequelize) => {
       allowNull: false
     },
     description: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING(3000)
     },
     hours: {
       type: Sequelize.INTEGER

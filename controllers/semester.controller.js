@@ -1,53 +1,56 @@
 const db = require("../models");
 const { Op } = require("sequelize");
-const Course = db.course;
+const Semester = db.semester;
 
-// Create and Save a new course
+// Create and Save a new Tutorial
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.number) {
+  if (!req.body.code) {
     res.status(400).send({
-      message: "number cannot be empty!"
+      message: "Semester code cannot be empty!"
     });
     return;
-  } else if (!req.body.name) {
+  } else if (!req.body.startDate) {
     res.status(400).send({
-      message: "name cannot be empty!"
+      message: "Start date cannot be empty!"
+    });
+    return;
+  } else if (!req.body.endDate) {
+    res.status(400).send({
+      message: "End date cannot be empty!"
     });
     return;
   }
   
-  const course = {
-    number: req.body.number,
-    name: req.body.name,
-    description: req.body.description,
-    hours: req.body.hours,
-    level: req.body.level 
+  const semester = {
+    code: req.body.code,
+    startDate: req.body.startDate,
+    endDate: req.body.endDate
   };
 
   // Create and Save a new Course
-  Course.create(course)
+  Semester.create(semester)
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the course."
+          err.message || "Some error occurred while creating the Course."
       });
     });
 };
 
 // Retrieve all Courses from the database
 exports.findAll = (req, res) => {
-  Course.findAll()
+  Semester.findAll()
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving the courses."
+          err.message || "Some error occurred while retrieving Courses."
       });
     });
 };
@@ -55,19 +58,19 @@ exports.findAll = (req, res) => {
 // Retrieve a single Course with an id
 exports.findById = (req, res) => {
   const id = req.params.id;
-  Course.findByPk(id)
+  Semester.findByPk(id)
     .then(data => {
       if (data) {
         res.send(data);
       } else {
         res.status(404).send({
-          message: 'Cannot find the course with id=' + id
+          message: 'Cannot find Course with id=' + id
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: 'Error retrieving the course with id=' + id
+        message: 'Error retrieving Course with id=' + id
       });
     });
 };
@@ -75,7 +78,7 @@ exports.findById = (req, res) => {
 // Update a Course by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
-  Course.update(req.body, {
+  Semester.update(req.body, {
     where: { id: id }
   })
   .then(num => {
@@ -85,13 +88,13 @@ exports.update = (req, res) => {
       });
     } else {
       res.send({
-        message: 'Cannot update the course with id=' + id + '. Maybe the course was not found or req.body is empty!'
+        message: 'Cannot update Course with id=' + id + '. Maybe Course was not found or req.body is empty!'
       });
     }
   })
   .catch(err => {
     res.status(500).send({
-      message: 'Error updating the course with id=' + id
+      message: 'Error updating Course with id=' + id
     });
   });
 };
@@ -99,7 +102,7 @@ exports.update = (req, res) => {
 // Delete a Course with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
-  Course.destroy({
+  Semester.destroy({
     where: { id: id }
   })
   .then(num => {
@@ -109,7 +112,7 @@ exports.delete = (req, res) => {
       });
     } else {
       res.send({
-        message: 'Cannot delete the course with id='+id+'. Maybe Course was not found'
+        message: 'Cannot delete Course with id=${id}. Maybe Course was not found or '
       })
     }
   })
