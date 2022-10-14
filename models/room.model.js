@@ -11,8 +11,7 @@ module.exports = (sequelize, Sequelize) => {
       allowNull: false
     },    
     capacity: {
-      type: Sequelize.INTEGER,
-      allowNull: false
+      type: Sequelize.INTEGER
     },
   },
   {
