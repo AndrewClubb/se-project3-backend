@@ -4,14 +4,14 @@ const db = require("../models");
 const fs = require("fs");
 const csv = require("fast-csv");
 
-const upload = async (req, res) => {
+exports.upload = async (req, res) => {
   try {
     if (req.file == undefined) {
       return res.status(400).send("Please upload a CSV file!");
     }
 
     let tutorials = [];
-    let path = "../resources/static/assets/uploads/" + req.file.filename;
+    let path = "resources/static/assets/uploads/" + req.file.filename;
 
     fs.createReadStream(path)
       .pipe(csv.parse({ headers: true }))
@@ -46,23 +46,10 @@ const upload = async (req, res) => {
   }
 };
 
-// const getTutorials = (req, res) => {
-//   Tutorial.findAll()
-//     .then((data) => {
-//       res.send(data);
-//     })
-//     .catch((err) => {
-//       res.status(500).send({
-//         message:
-//           err.message || "Some error occurred while retrieving tutorials.",
-//       });
-//     });
+// module.exports = {
+//   upload
+//   //getTutorials
 // };
-
-module.exports = {
-  upload
-  //getTutorials
-};
 
 //***************************** */
 // var fs = require('fs').promises;

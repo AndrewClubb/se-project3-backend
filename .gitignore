@@ -6,7 +6,7 @@ deploy
 
 # dataFile
 data.csv
-resources\static\assets\uploads\*
+resources/static/assets/uploads/*
 
 # Logs
 logs
