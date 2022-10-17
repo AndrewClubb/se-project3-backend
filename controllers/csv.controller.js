@@ -10,7 +10,7 @@ exports.upload = async (req, res) => {
       return res.status(400).send("Please upload a CSV file!");
     }
 
-    let tutorials = [];
+    //let tutorials = [];
     let path = "resources/static/assets/uploads/" + req.file.filename;
 
     fs.createReadStream(path)
@@ -20,10 +20,8 @@ exports.upload = async (req, res) => {
       })
       .on("data", (row) => {
         //tutorials.push(row);
-        //console.log("read a row");
       })
       .on("end", () => {
-        console.log("read the file");
         // Tutorial.bulkCreate(tutorials)
         //   .then(() => {
         //     res.status(200).send({
@@ -52,6 +50,7 @@ exports.upload = async (req, res) => {
 // };
 
 //***************************** */
+
 // var fs = require('fs').promises;
 // var parse = require('csv-parse/sync');
 // const { readFile } = require('fs');
