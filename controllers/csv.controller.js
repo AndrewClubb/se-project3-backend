@@ -1,8 +1,14 @@
 const db = require("../models");
-//const Tutorial = db.tutorials;
-
 const fs = require("fs");
 const csv = require("fast-csv");
+
+const Faculty = db.faculty;
+const Section = db.section;
+const Room = db.room;
+const Course = db.course;
+const Semester = db.semester;
+
+let facultyDatabase = [], sectionDatabase = [], roomDatabase = [], courseDatabase = [], semesterDatabase = [];
 
 exports.upload = async (req, res) => {
   try {
@@ -10,8 +16,10 @@ exports.upload = async (req, res) => {
       return res.status(400).send("Please upload a CSV file!");
     }
 
-    //let tutorials = [];
     let path = "resources/static/assets/uploads/" + req.file.filename;
+
+    //fill arrays with data from database
+    await loadData();
 
     fs.createReadStream(path)
       .pipe(csv.parse({ headers: true }))
@@ -19,7 +27,20 @@ exports.upload = async (req, res) => {
         throw error.message;
       })
       .on("data", (row) => {
-        //tutorials.push(row);
+        //Faculty
+        const facultyId = findFacultyId(row);
+
+        //Course?
+
+        //Semester?
+
+        //Room
+
+        //Section
+
+        //FacultySection
+
+        //SectionTimes
       })
       .on("end", () => {
         // Tutorial.bulkCreate(tutorials)
@@ -35,6 +56,11 @@ exports.upload = async (req, res) => {
         //       error: error.message,
         //     });
         //   });
+
+        res.status(200).send({
+          message:
+            "Uploaded the file successfully: " + req.file.originalname,
+        });
       });
   } catch (error) {
     console.log(error);
@@ -44,24 +70,65 @@ exports.upload = async (req, res) => {
   }
 };
 
-// module.exports = {
-//   upload
-//   //getTutorials
-// };
+async function loadData() {
+  await Faculty.findAll()
+    .then(data => {
+      for (let index = 0; index < data.length; index++) {
+        facultyDatabase.push(data[index].dataValues);    
+      }
+    })
+    .catch(err => {
+      console.log(err)
+    });
+  
 
-//***************************** */
+  await Section.findAll()
+    .then(data => {
+      for (let index = 0; index < data.length; index++) {
+        sectionDatabase.push(data[index].dataValues);    
+      }
+    })
+    .catch(err => {
+      console.log(err)
+    });
 
-// var fs = require('fs').promises;
-// var parse = require('csv-parse/sync');
-// const { readFile } = require('fs');
+  await Room.findAll()
+    .then(data => {
+      for (let index = 0; index < data.length; index++) {
+        roomDatabase.push(data[index].dataValues);    
+      }
+    })
+    .catch(err => {
+      console.log(err)
+    });
 
-// readFile = () => {
-//     const fileContent = fs.readFile('data.csv');
-//     const data = parse.parse(fileContent, {columns: true});
-//     //console.log(data[25])
-//     findRoomId(data[25].Bldg+"-"+data[25].Room);
-// };
+  await Course.findAll()
+    .then(data => {
+      for (let index = 0; index < data.length; index++) {
+        courseDatabase.push(data[index].dataValues);    
+      }
+    })
+    .catch(err => {
+      console.log(err)
+    });
 
-// function findRoomId(roomNum) {
-    
-// };
+  await Semester.findAll()
+    .then(data => {
+      for (let index = 0; index < data.length; index++) {
+        semesterDatabase.push(data[index].dataValues);    
+      }
+    })
+    .catch(err => {
+      console.log(err)
+    });
+};
+
+function findFacultyId(row) {
+  var id;
+  var rowFName = row.fName;
+  var rowLName = row.lName;
+
+  console.log(row);
+
+  return id;
+};
