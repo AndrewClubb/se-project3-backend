@@ -2,7 +2,7 @@ const db = require("../models");
 const { Op } = require("sequelize");
 const User = db.user;
 
-// Create and Save a new Tutorial
+// Create and Save a new user
 exports.create = (req, res) => {
   // Validate request
   if (!req.body.email) {
@@ -22,7 +22,7 @@ exports.create = (req, res) => {
     role: req.body.role
   };
 
-  // Create and Save a new Course
+  // Create and Save a new user
   User.create(user)
     .then(data => {
       res.send(data);
@@ -30,12 +30,12 @@ exports.create = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the Course."
+          err.message || "Some error occurred while creating the user."
       });
     });
 };
 
-// Retrieve all Courses from the database
+// Retrieve all users from the database
 exports.findAll = (req, res) => {
   User.findAll()
     .then(data => {
@@ -44,12 +44,12 @@ exports.findAll = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving Courses."
+          err.message || "Some error occurred while retrieving users."
       });
     });
 };
 
-// Retrieve a single Course with an id
+// Retrieve a single user with an id
 exports.findById = (req, res) => {
   const id = req.params.id;
   User.findByPk(id)
@@ -58,18 +58,18 @@ exports.findById = (req, res) => {
         res.send(data);
       } else {
         res.status(404).send({
-          message: 'Cannot find Course with id=' + id
+          message: 'Cannot find user with id=' + id
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: 'Error retrieving Course with id=' + id
+        message: 'Error retrieving user with id=' + id
       });
     });
 };
 
-// Update a Course by the id in the request
+// Update a user by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
   User.update(req.body, {
@@ -78,22 +78,22 @@ exports.update = (req, res) => {
   .then(num => {
     if (num == 1) {
       res.send({
-        message: 'Course was updated successfully.'
+        message: 'User was updated successfully.'
       });
     } else {
       res.send({
-        message: 'Cannot update Course with id=' + id + '. Maybe Course was not found or req.body is empty!'
+        message: 'Cannot update user with id=' + id + '. Maybe user was not found or req.body is empty!'
       });
     }
   })
   .catch(err => {
     res.status(500).send({
-      message: 'Error updating Course with id=' + id
+      message: 'Error updating user with id=' + id
     });
   });
 };
 
-// Delete a Course with the specified id in the request
+// Delete a user with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
   User.destroy({
@@ -102,11 +102,11 @@ exports.delete = (req, res) => {
   .then(num => {
     if (num == 1) {
       res.send({
-        message: 'Course was deleted successfully!'
+        message: 'User was deleted successfully!'
       });
     } else {
       res.send({
-        message: 'Cannot delete Course with id=${id}. Maybe Course was not found or '
+        message: 'Cannot delete user with id=' + id + '. Maybe user was not found'
       })
     }
   })

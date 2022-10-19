@@ -2,7 +2,7 @@ const db = require("../models");
 const { Op } = require("sequelize");
 const Event = db.event;
 
-// Create and Save a new Tutorial
+// Create and Save a new event
 exports.create = (req, res) => {
   const event = {
     facultyId: req.params.facultyId,
@@ -10,7 +10,7 @@ exports.create = (req, res) => {
     roomId: req.params.roomId
   };
 
-  // Create and Save a new Course
+  // Create and Save a new event
   Event.create(event)
     .then(data => {
       res.send(data);
@@ -18,12 +18,12 @@ exports.create = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the Course."
+          err.message || "Some error occurred while creating the event."
       });
     });
 };
 
-// Retrieve all Courses from the database
+// Retrieve all events from the database
 exports.findAll = (req, res) => {
   Event.findAll()
     .then(data => {
@@ -32,12 +32,12 @@ exports.findAll = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving Courses."
+          err.message || "Some error occurred while retrieving events."
       });
     });
 };
 
-// Retrieve a single Course with an id
+// Retrieve a single event with an id
 exports.findById = (req, res) => {
   const id = req.params.id;
   Event.findByPk(id)
@@ -46,18 +46,18 @@ exports.findById = (req, res) => {
         res.send(data);
       } else {
         res.status(404).send({
-          message: 'Cannot find Course with id=' + id
+          message: 'Cannot find event with id=' + id
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: 'Error retrieving Course with id=' + id
+        message: 'Error retrieving event with id=' + id
       });
     });
 };
 
-// Update a Course by the id in the request
+// Update a event by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
   Event.update(req.body, {
@@ -66,22 +66,22 @@ exports.update = (req, res) => {
   .then(num => {
     if (num == 1) {
       res.send({
-        message: 'Course was updated successfully.'
+        message: 'Event was updated successfully.'
       });
     } else {
       res.send({
-        message: 'Cannot update Course with id=' + id + '. Maybe Course was not found or req.body is empty!'
+        message: 'Cannot update event with id=' + id + '. Maybe event was not found or req.body is empty!'
       });
     }
   })
   .catch(err => {
     res.status(500).send({
-      message: 'Error updating Course with id=' + id
+      message: 'Error updating event with id=' + id
     });
   });
 };
 
-// Delete a Course with the specified id in the request
+// Delete a event with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
   Event.destroy({
@@ -90,11 +90,11 @@ exports.delete = (req, res) => {
   .then(num => {
     if (num == 1) {
       res.send({
-        message: 'Course was deleted successfully!'
+        message: 'Event was deleted successfully!'
       });
     } else {
       res.send({
-        message: 'Cannot delete Course with id=${id}. Maybe Course was not found or '
+        message: 'Cannot delete event with id='+id+'. Maybe event was not found'
       })
     }
   })

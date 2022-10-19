@@ -2,14 +2,14 @@ const db = require("../models");
 const { Op } = require("sequelize");
 const FacultySection = db.facultySection;
 
-// Create and Save a new Tutorial
+// Create and Save a new facultySection
 exports.create = (req, res) => {
   const facultySection = {
     sectionId: req.params.sectionId,
     facultyId: req.params.facultyId
   };
 
-  // Create and Save a new Course
+  // Create and Save a new facultySection
   FacultySection.create(facultySection)
     .then(data => {
       res.send(data);
@@ -17,12 +17,12 @@ exports.create = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the Course."
+          err.message || "Some error occurred while creating the facultySection."
       });
     });
 };
 
-// Retrieve all Courses from the database
+// Retrieve all facultySections from the database
 exports.findAll = (req, res) => {
   FacultySection.findAll()
     .then(data => {
@@ -31,12 +31,12 @@ exports.findAll = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving Courses."
+          err.message || "Some error occurred while retrieving facultySections."
       });
     });
 };
 
-// Retrieve a single Course with an id
+// Retrieve a single facultySection with an id
 exports.findById = (req, res) => {
   const id = req.params.id;
   FacultySection.findByPk(id)
@@ -45,18 +45,18 @@ exports.findById = (req, res) => {
         res.send(data);
       } else {
         res.status(404).send({
-          message: 'Cannot find Course with id=' + id
+          message: 'Cannot find facultySection with id=' + id
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: 'Error retrieving Course with id=' + id
+        message: 'Error retrieving facultySection with id=' + id
       });
     });
 };
 
-// Update a Course by the id in the request
+// Update a facultySection by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
   FacultySection.update(req.body, {
@@ -65,22 +65,22 @@ exports.update = (req, res) => {
   .then(num => {
     if (num == 1) {
       res.send({
-        message: 'Course was updated successfully.'
+        message: 'FacultySection was updated successfully.'
       });
     } else {
       res.send({
-        message: 'Cannot update Course with id=' + id + '. Maybe Course was not found or req.body is empty!'
+        message: 'Cannot update facultySection with id=' + id + '. Maybe facultySection was not found or req.body is empty!'
       });
     }
   })
   .catch(err => {
     res.status(500).send({
-      message: 'Error updating Course with id=' + id
+      message: 'Error updating facultySection with id=' + id
     });
   });
 };
 
-// Delete a Course with the specified id in the request
+// Delete a facultySection with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
   FacultySection.destroy({
@@ -89,11 +89,11 @@ exports.delete = (req, res) => {
   .then(num => {
     if (num == 1) {
       res.send({
-        message: 'Course was deleted successfully!'
+        message: 'FacultySection was deleted successfully!'
       });
     } else {
       res.send({
-        message: 'Cannot delete Course with id=${id}. Maybe Course was not found or '
+        message: 'Cannot delete facultySection with id=' + id + '. Maybe facultySection was not found'
       })
     }
   })
