@@ -68,11 +68,14 @@ exports.upload = async (req, res) => {
       }
     }
 
+    fs.unlink("resources/static/assets/uploads/" + req.file.filename);
+    
     res.status(200).send({
       message:
         "Uploaded the file successfully: " + req.file.originalname,
     });
   } catch (error) {
+    fs.unlink("resources/static/assets/uploads/" + req.file.filename);
     console.log(error);
     res.status(500).send({
       message: "There was a problem uploading the file: " + req.file.originalname,
