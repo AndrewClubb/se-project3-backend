@@ -4,6 +4,9 @@ bin/
 #deployment
 deploy
 
+# dataFile
+data.csv
+
 # Logs
 logs
 *.log

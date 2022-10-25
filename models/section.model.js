@@ -7,7 +7,7 @@ module.exports = (sequelize, Sequelize) => {
       unique: true
     },    
     number: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.STRING,
       allowNull: false
     },
   },

@@ -10,16 +10,6 @@ exports.create = (req, res) => {
       message: "Semester code cannot be empty!"
     });
     return;
-  } else if (!req.body.startDate) {
-    res.status(400).send({
-      message: "Start date cannot be empty!"
-    });
-    return;
-  } else if (!req.body.endDate) {
-    res.status(400).send({
-      message: "End date cannot be empty!"
-    });
-    return;
   }
   
   const semester = {

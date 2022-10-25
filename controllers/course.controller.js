@@ -21,7 +21,7 @@ exports.create = (req, res) => {
     number: req.body.number,
     name: req.body.name,
     description: req.body.description,
-    hours: req.body.hours,
+    hours: req.body.hours, 
     level: req.body.level 
   };
 
