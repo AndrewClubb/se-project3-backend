@@ -4,8 +4,8 @@ module.exports = app => {
     const upload = require("../middlewares/upload");
 
     //upload a csv file
-    router.post("/upload", upload.single("file"), csvController.upload);
+    router.post("/upload/section", upload.single("file"), csvController.upload);
     //router.post("/upload", upload, csvController.upload);
 
-    app.use('/schedule-t2/csv', router);
+    app.use('/schedule-t2/file', router);
 };

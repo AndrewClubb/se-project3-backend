@@ -29,7 +29,7 @@ require("./routes/sectionTime.routes.js")(app);
 require("./routes/semester.routes.js")(app);
 require("./routes/specialList.routes.js")(app);
 require("./routes/user.routes.js")(app);
-require("./routes/csv.routes")(app);
+require("./routes/csv.routes.js")(app);
 // set port, listen for requests
 const PORT = process.env.PORT || 3012;
 app.listen(PORT, () => {

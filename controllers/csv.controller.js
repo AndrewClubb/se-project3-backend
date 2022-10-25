@@ -26,7 +26,7 @@ exports.upload = async (req, res) => {
     for(let rowIndex = 0; rowIndex < records.length; rowIndex++) {
       //General variables
       let row = records[rowIndex];
-      let facultyId = 0, facultyId2 = 0, sectionId = 0, roomId = 0;
+      let facultyId = 0, facultyId2 = 0, courseId = 0, sectionId = 0, roomId = 0, semesterId = 0;
       //Room variables
       let rowBldgArray = row["Bldg"].split(", ");
       let rowRoomArray = row["Room"].split(", ");
@@ -48,8 +48,12 @@ exports.upload = async (req, res) => {
       if (!row["Faculty Name 2 (LFM)"] === "") {
         facultyId2 = await findFacultyId(row["Faculty Name 2 (LFM)"]);
       }
+      //Get course ID
+      courseId = await findCourseId(row["Subject"],row["Course #"],row["Section Title"]);
+      //Get semester ID
+      semesterId = await findSemesterId(row["Term"]);
       //Get section ID
-      sectionId = await findSectionId(row["Section #"], row["Subject"], row["Course #"], row["Term"]);
+      sectionId = await findSectionId(row["Section #"], courseId, semesterId);
 
       //Generate facultySections
       await findFacultySectionId(facultyId, sectionId);
@@ -191,28 +195,60 @@ async function findRoomId(inputBdlg, inputRoom) {
   return tempRoom.id;
 }
 
-async function findSectionId(inputSectionNum, inputSubject, inputCourse, inputSemester) {
-  var courseId, semesterId;
-  var courseNum = inputSubject+"-"+inputCourse;
-  var tempCourse = courseArray.find(cour => cour.number === courseNum);
-  var tempSemester = semesterArray.find(sem => sem.code === inputSemester);
+async function findCourseId(inputSubject, inputCourseNum, inputTitle) {
+  var courseNumber = inputSubject+"-"+inputCourseNum;
 
+  var tempCourse = courseArray.find(course => course.number === courseNumber);
   if(tempCourse === null || tempCourse === undefined) {
-    console.log("course was not found");
-    courseId = 1;
-  } else {courseId = tempCourse.id;}
-  if(tempSemester === null || tempSemester === undefined) {
-    console.log("semester was not found");
-    semesterId = 1;
-  } else {semesterId = tempSemester.id;}
+    const course = {
+      number: courseNumber,
+      name: inputTitle
+    };
 
-  var tempSection = sectionArray.find(section => section.number === inputSectionNum && section.courseId === courseId);
+    await Course.create(course)
+    .then(data => {
+      tempCourse = data.dataValues;
+      courseArray.push(tempCourse);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  }
+
+  return tempCourse.id;
+}
+
+async function findSemesterId(inputSemesterCode) {
+
+  var tempSemester = semesterArray.find(semester => semester.code === inputSemesterCode);
+
+  if(tempSemester === null || tempSemester === undefined) {
+    const semester = {
+      code: inputSemesterCode
+    };
+
+    await Semester.create(semester)
+    .then(data => {
+      tempSemester = data.dataValues;
+      sectionArray.push(tempSemester);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  }
+
+  return tempSemester.id;
+}
+
+async function findSectionId(inputSectionNum, inputCourseId, inputSemesterId) {
+
+  var tempSection = sectionArray.find(section => section.number === inputSectionNum && section.courseId === inputCourseId);
 
   if(tempSection === null || tempSection === undefined) {
     const section = {
       number: inputSectionNum,
-      courseId: courseId,
-      semesterId: semesterId,
+      courseId: inputCourseId,
+      semesterId: inputSemesterId,
     };
 
     await Section.create(section)
