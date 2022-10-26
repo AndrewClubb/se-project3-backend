@@ -10,9 +10,11 @@ const Semester = db.semester;
 const FacultySection = db.facultySection;
 const SectionTime = db.sectionTime;
 
-let facultyArray = [], sectionArray = [], roomArray = [], courseArray = [], semesterArray = [], facultySectionArray = [];
+let facultyArray = [], sectionArray = [], roomArray = [], courseArray = [], semesterArray = [], 
+    facultySectionArray = [], sectionTimeArray = [];
 
 exports.uploadSections = async (req, res) => {
+  console.log("new file");
   if (req.file == undefined) {
     return res.status(400).send("Please upload a CSV file!");
   }
@@ -78,6 +80,8 @@ exports.uploadSections = async (req, res) => {
           rowFridayArray[varIndex], rowSaturdayArray[varIndex], sectionId, roomId)
       }
     }
+
+    console.log("end of file");
 
     fs.unlink("resources/static/assets/uploads/" + req.file.filename);
     
@@ -190,6 +194,16 @@ async function loadSectionArrays() {
     .then(data => {
       for (let index = 0; index < data.length; index++) {
         semesterArray.push(data[index].dataValues);    
+      }
+    })
+    .catch(err => {
+      console.log(err)
+    });
+
+  await SectionTime.findAll()
+    .then(data => {
+      for(let index = 0; index < data.length; index++) {
+        sectionTimeArray.push(data[index].dataValues);
       }
     })
     .catch(err => {
@@ -334,40 +348,43 @@ async function findFacultySectionId(inputFacultyId, inputSectionId) {
 }
 
 async function findSectionTimeId(inputStartTime, inputEndTime, inputStartDate, inputEndDate, inputSunday, inputMonday, inputTuesday, inputWednesday, inputThursday, inputFriday, inputSaturday, inputSectionId, inputRoomId) {
-  var tempSectionTime;
 
   if(inputStartDate === '' || inputEndDate === '') {
     return;
   }
 
-  const sectionTime = {
-    startTime: inputStartTime,
-    endTime: inputEndTime,
-    startDate: inputStartDate,
-    endDate: inputEndDate,
-    sunday: inputSunday==='Y',
-    monday: inputMonday==='Y',
-    tuesday: inputTuesday==='Y',
-    wednesday: inputWednesday==='Y',
-    thursday: inputThursday==='Y',
-    friday: inputFriday==='Y',
-    saturday: inputSaturday==='Y',
-    sectionId: inputSectionId,
-    roomId: inputRoomId
-  };
+  var tempSectionTime = sectionTimeArray.find(st => st.startTime === inputStartTime && st.endTime === inputEndTime && st.startDate === inputStartDate && st.endDate === inputEndDate && st.sectionId === inputSectionId && st.roomId === inputRoomId);
 
-  await SectionTime.create(sectionTime)
-  .then(data => {
-    tempSectionTime = data.dataValues;
-  })
-  .catch(err => {
-    console.log(err);
-    console.log("==========================================");
-    console.log(sectionTime);
-    console.log("==========================================");
-    console.log("|"+inputStartDate+"|");
-  });
-  
+  console.log("============");
+  console.log(tempSectionTime);
+  console.log("============");
+
+  if(tempSectionTime === null || tempSectionTime === undefined) {
+    const sectionTime = {
+      startTime: inputStartTime,
+      endTime: inputEndTime,
+      startDate: inputStartDate,
+      endDate: inputEndDate,
+      sunday: inputSunday==='Y',
+      monday: inputMonday==='Y',
+      tuesday: inputTuesday==='Y',
+      wednesday: inputWednesday==='Y',
+      thursday: inputThursday==='Y',
+      friday: inputFriday==='Y',
+      saturday: inputSaturday==='Y',
+      sectionId: inputSectionId,
+      roomId: inputRoomId
+    };
+
+    await SectionTime.create(sectionTime)
+    .then(data => {
+      tempSectionTime = data.dataValues;
+      sectionTimeArray.push(tempSectionTime);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  }
   return tempSectionTime;
 }
 
