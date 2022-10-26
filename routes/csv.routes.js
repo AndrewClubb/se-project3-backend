@@ -3,9 +3,10 @@ module.exports = app => {
     var router = require("express").Router();
     const upload = require("../middlewares/upload");
 
-    //upload a csv file
-    router.post("/upload/section", upload.single("file"), csvController.upload);
-    //router.post("/upload", upload, csvController.upload);
+    //upload a section csv file
+    router.post("/sections", upload.single("file"), csvController.uploadSections);   
+    //upload a course csv file 
+    router.post("/courses", upload.single("file"), csvController.uploadCourses);  
 
-    app.use('/schedule-t2/file', router);
+    app.use('/schedule-t2/upload', router);
 };
