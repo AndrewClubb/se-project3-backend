@@ -353,11 +353,7 @@ async function findSectionTimeId(inputStartTime, inputEndTime, inputStartDate, i
     return;
   }
 
-  var tempSectionTime = sectionTimeArray.find(st => st.startTime === inputStartTime && st.endTime === inputEndTime && st.startDate === inputStartDate && st.endDate === inputEndDate && st.sectionId === inputSectionId && st.roomId === inputRoomId);
-
-  console.log("============");
-  console.log(tempSectionTime);
-  console.log("============");
+  var tempSectionTime = sectionTimeArray.find(st => (st.startTime === inputStartTime || (st.startTime === "00:00:00" && inputStartTime === "")) && (st.endTime === inputEndTime || (st.endTime === "00:00:00" && inputEndTime === "")) && st.startDate === inputStartDate && st.endDate === inputEndDate && st.sectionId === inputSectionId && st.roomId === inputRoomId);
 
   if(tempSectionTime === null || tempSectionTime === undefined) {
     const sectionTime = {
