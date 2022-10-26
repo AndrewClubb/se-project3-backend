@@ -14,7 +14,6 @@ let facultyArray = [], sectionArray = [], roomArray = [], courseArray = [], seme
     facultySectionArray = [], sectionTimeArray = [];
 
 exports.uploadSections = async (req, res) => {
-  console.log("new file");
   if (req.file == undefined) {
     return res.status(400).send("Please upload a CSV file!");
   }
@@ -80,8 +79,6 @@ exports.uploadSections = async (req, res) => {
           rowFridayArray[varIndex], rowSaturdayArray[varIndex], sectionId, roomId)
       }
     }
-
-    console.log("end of file");
 
     fs.unlink("resources/static/assets/uploads/" + req.file.filename);
     
