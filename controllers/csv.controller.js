@@ -15,7 +15,7 @@ let facultyArray = [], sectionArray = [], roomArray = [], courseArray = [], seme
 
 exports.uploadSections = async (req, res) => {
   if (req.file == undefined) {
-    return res.status(400).send("Please upload a CSV file!");
+    return res.status(400).send({message:"Please upload a CSV file!"});
   }
 
   try {
@@ -26,7 +26,7 @@ exports.uploadSections = async (req, res) => {
     let headerErrorMessage = validateSectionHeaders(records[0]);
     if(headerErrorMessage != "") {
       fs.unlink("resources/static/assets/uploads/" + req.file.filename);
-      return res.status(400).send(req.file.originalname + " is missing collumns ["+headerErrorMessage+"]");
+      return res.status(400).send({message:req.file.originalname + " is missing collumns ["+headerErrorMessage+"]"});
     }
 
     await loadSectionArrays();
@@ -289,7 +289,7 @@ async function findSemesterId(inputSemesterCode) {
     await Semester.create(semester)
     .then(data => {
       tempSemester = data.dataValues;
-      sectionArray.push(tempSemester);
+      semesterArray.push(tempSemester);
     })
     .catch(err => {
       console.log(err);
