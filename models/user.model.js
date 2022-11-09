@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-  const SpecialList = sequelize.define("specialList", {
+  const User = sequelize.define("user", {
     id: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
@@ -19,5 +19,5 @@ module.exports = (sequelize, Sequelize) => {
     timestamps: false
   });
 
-  return SpecialList;
+  return User;
 };
