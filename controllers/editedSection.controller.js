@@ -5,7 +5,36 @@ const EditedSection = db.editedSection;
 // Create and Save a new editedSection
 exports.create = (req, res) => {
   const editedSection = {
-    sectionId: req.params.sectionId
+    sectionId: req.params.sectionId,
+    crudOperation: req.params.crudOperation,
+    oldNumber: req.params.oldNumber,
+    oldStartTime: req.params.oldStartTime,
+    oldEndTime: req.params.oldEndTime,
+    oldStartDate: req.params.oldStartDate,
+    oldEndDate: req.params.oldEndDate,
+    oldSunday: req.params.oldSunday,
+    oldMonday: req.params.oldMonday,
+    oldTuesday: req.params.oldTuesday,
+    oldWednesday: req.params.oldWednesday,
+    oldThursday: req.params.oldThursday,
+    oldFriday: req.params.oldFriday,
+    oldSaturday: req.params.oldSaturday,
+    oldSemesterId: req.params.oldSemesterId,
+    oldRoomId: req.params.oldRoomId,
+    newNumber: req.params.newNumber,
+    newStartTime: req.params.newStartTime,
+    newEndTime: req.params.newEndTime,
+    newStartDate: req.params.newStartDate,
+    newEndDate: req.params.newEndDate,
+    newSunday: req.params.newSunday,
+    newMonday: req.params.newMonday,
+    newTuesday: req.params.newTuesday,
+    newWednesday: req.params.newWednesday,
+    newThursday: req.params.newThursday,
+    newFriday: req.params.newFriday,
+    newSaturday: req.params.newSaturday,
+    newSemesterId: req.params.newSemesterId,
+    newRoomId: req.params.newRoomId
   };
 
   // Create and Save a new editedSection

@@ -1,6 +1,7 @@
 const db = require("../models");
 const { Op } = require("sequelize");
 const SectionTime = db.sectionTime;
+const EditedSection = db.editedSection;
 
 // Create and Save a new sectionTime
 exports.create = (req, res) => {
@@ -54,6 +55,46 @@ exports.create = (req, res) => {
           err.message || "Some error occurred while creating the sectionTime."
       });
     });
+  
+  editedSectionCreate();
+};
+
+function editedSectionCreate() {
+  const editedSection = {
+    sectionId: null,
+    crudOperation: 'Added',
+    oldNumber: null,
+    oldStartTime: null,
+    oldEndTime: null,
+    oldStartDate: null,
+    oldEndDate: null,
+    oldSunday: null,
+    oldMonday: null,
+    oldTuesday: null,
+    oldWednesday: null,
+    oldThursday: null,
+    oldFriday: null,
+    oldSaturday: null,
+    oldSemesterId: null,
+    oldRoomId: null,
+    
+    newNumber: null,
+    newStartTime: null,
+    newEndTime: null,
+    newStartDate: null,
+    newEndDate: null,
+    newSunday: null,
+    newMonday: null,
+    newTuesday: null,
+    newWednesday: null,
+    newThursday: null,
+    newFriday: null,
+    newSaturday: null,
+    newSemesterId: null,
+    newRoomId: null
+  };
+
+
 };
 
 // Retrieve all sectionTimes from the database

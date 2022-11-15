@@ -5,47 +5,93 @@ module.exports = (sequelize, Sequelize) => {
       autoIncrement: true,
       primaryKey: true,
       unique: true
-    },    
-    number: {
+    },
+    crudOperation: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
+    oldNumber: {
       type: Sequelize.STRING
     },
-    startTime: {
+    oldStartTime: {
       type: Sequelize.TIME
     },    
-    endTime: {
+    oldEndTime: {
       type: Sequelize.TIME
     },
-    startDate: {
+    oldStartDate: {
       type: Sequelize.DATEONLY
     },
-    endDate: {
+    oldEndDate: {
       type: Sequelize.DATEONLY
     },
-    sunday: {
+    oldSunday: {
       type: Sequelize.BOOLEAN
     },
-    monday: {
+    oldMonday: {
       type: Sequelize.BOOLEAN
     },
-    tuesday: {
+    oldTuesday: {
       type: Sequelize.BOOLEAN
     },
-    wednesday: {
+    oldWednesday: {
       type: Sequelize.BOOLEAN
     },
-    thursday: {
+    oldThursday: {
       type: Sequelize.BOOLEAN
     },
-    friday: {
+    oldFriday: {
       type: Sequelize.BOOLEAN
     },
-    saturday: {
+    oldSaturday: {
       type: Sequelize.BOOLEAN
     },
-    semesterId: {
+    oldSemesterId: {
       type: Sequelize.STRING
     },
-    roomId: {
+    oldRoomId: {
+      type: Sequelize.STRING
+    },    
+    newNumber: {
+      type: Sequelize.STRING
+    },
+    newStartTime: {
+      type: Sequelize.TIME
+    },    
+    newEndTime: {
+      type: Sequelize.TIME
+    },
+    newStartDate: {
+      type: Sequelize.DATEONLY
+    },
+    newEndDate: {
+      type: Sequelize.DATEONLY
+    },
+    newSunday: {
+      type: Sequelize.BOOLEAN
+    },
+    newMonday: {
+      type: Sequelize.BOOLEAN
+    },
+    newTuesday: {
+      type: Sequelize.BOOLEAN
+    },
+    newWednesday: {
+      type: Sequelize.BOOLEAN
+    },
+    newThursday: {
+      type: Sequelize.BOOLEAN
+    },
+    newFriday: {
+      type: Sequelize.BOOLEAN
+    },
+    newSaturday: {
+      type: Sequelize.BOOLEAN
+    },
+    newSemesterId: {
+      type: Sequelize.STRING
+    },
+    newRoomId: {
       type: Sequelize.STRING
     },
   },
