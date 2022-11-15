@@ -66,9 +66,4 @@ db.event.belongsTo(db.faculty, {as:'faculty'}, {foreignKey:{allowNull: false}, o
 db.event.belongsTo(db.semester, {as:'semester'}, {foreignKey:{allowNull: false}, onDelete:'CASCADE'});
 db.event.belongsTo(db.room, {as:'room'}, {foreignKey:{allowNull: false}, onDelete:'CASCADE'});
 
-//foreign keys for editedSection
-db.sectionTime.hasMany(db.editedSection, {as:'editedSection'}, {foreignKey:{allowNull:false}, onDelete:'CASCADE'});
-db.editedSection.belongsTo(db.sectionTime, {as:'sectionTime'}, {foreignKey:{allowNull: false}, onDelete:'CASCADE'});
-
-
 module.exports = db;

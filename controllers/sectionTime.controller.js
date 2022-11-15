@@ -1,5 +1,6 @@
 const db = require("../models");
 const { Op } = require("sequelize");
+const Section = db.section;
 const SectionTime = db.sectionTime;
 const EditedSection = db.editedSection;
 
@@ -40,8 +41,8 @@ exports.create = (req, res) => {
     thursday: req.body.thursday,
     friday: req.body.friday,
     saturday: req.body.saturday,
-    sectionId: req.params.sectionId,
-    roomId: req.params.roomId
+    sectionId: req.body.sectionId,
+    roomId: req.body.roomId
   };
 
   // Create and Save a new sectionTime
@@ -56,45 +57,46 @@ exports.create = (req, res) => {
       });
     });
   
-  editedSectionCreate();
+  editedSectionCreate(sectionTime);
 };
 
-function editedSectionCreate() {
+async function editedSectionCreate(sectionTime) {
+  var section;
+
+  await Section.findByPk(sectionTime.sectionId)
+    .then(data => {
+      section = data.dataValues;
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
   const editedSection = {
-    sectionId: null,
-    crudOperation: 'Added',
-    oldNumber: null,
-    oldStartTime: null,
-    oldEndTime: null,
-    oldStartDate: null,
-    oldEndDate: null,
-    oldSunday: null,
-    oldMonday: null,
-    oldTuesday: null,
-    oldWednesday: null,
-    oldThursday: null,
-    oldFriday: null,
-    oldSaturday: null,
-    oldSemesterId: null,
-    oldRoomId: null,
-    
-    newNumber: null,
-    newStartTime: null,
-    newEndTime: null,
-    newStartDate: null,
-    newEndDate: null,
-    newSunday: null,
-    newMonday: null,
-    newTuesday: null,
-    newWednesday: null,
-    newThursday: null,
-    newFriday: null,
-    newSaturday: null,
-    newSemesterId: null,
-    newRoomId: null
+    sectionId: sectionTime.sectionId,
+    crudOperation: "Added",
+    newNumber: section.number,
+    newStartTime: sectionTime.startTime,
+    newEndTime: sectionTime.endTime,
+    newStartDate: sectionTime.startDate,
+    newEndDate: sectionTime.endDate,
+    newSunday: sectionTime.sunday,
+    newMonday: sectionTime.monday,
+    newTuesday: sectionTime.tuesday,
+    newWednesday: sectionTime.wednesday,
+    newThursday: sectionTime.thursday,
+    newFriday: sectionTime.friday,
+    newSaturday: sectionTime.saturday,
+    newSemesterId: section.semesterId,
+    newRoomId: sectionTime.roomId
   };
 
-
+  EditedSection.create(editedSection)
+    .then(data => {
+      //console.log(data);
+    })
+    .catch(err => {
+      console.log(err);
+    });
 };
 
 // Retrieve all sectionTimes from the database
@@ -132,8 +134,11 @@ exports.findById = (req, res) => {
 };
 
 // Update a sectionTime by the id in the request
-exports.update = (req, res) => {
+exports.update = async (req, res) => {
   const id = req.params.id;
+
+  await editedSectionUpdate(id, req.body);
+
   SectionTime.update(req.body, {
     where: { id: id }
   })
@@ -155,6 +160,45 @@ exports.update = (req, res) => {
   });
 };
 
+async function editedSectionUpdate(sectionTimeId, body) {
+  var section;
+
+  await Section.findByPk(sectionTime.sectionId)
+    .then(data => {
+      section = data.dataValues;
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
+  const editedSection = {
+    sectionId: sectionTime.sectionId,
+    crudOperation: "Added",
+    newNumber: section.number,
+    newStartTime: sectionTime.startTime,
+    newEndTime: sectionTime.endTime,
+    newStartDate: sectionTime.startDate,
+    newEndDate: sectionTime.endDate,
+    newSunday: sectionTime.sunday,
+    newMonday: sectionTime.monday,
+    newTuesday: sectionTime.tuesday,
+    newWednesday: sectionTime.wednesday,
+    newThursday: sectionTime.thursday,
+    newFriday: sectionTime.friday,
+    newSaturday: sectionTime.saturday,
+    newSemesterId: section.semesterId,
+    newRoomId: sectionTime.roomId
+  };
+
+  EditedSection.create(editedSection)
+    .then(data => {
+      //console.log(data);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
+
 // Delete a sectionTime with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
@@ -172,4 +216,43 @@ exports.delete = (req, res) => {
       })
     }
   })
+};
+
+async function editedSectionDelete(sectionTime) {
+  var section;
+
+  await Section.findByPk(sectionTime.sectionId)
+    .then(data => {
+      section = data.dataValues;
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
+  const editedSection = {
+    sectionId: sectionTime.sectionId,
+    crudOperation: "Added",
+    newNumber: section.number,
+    newStartTime: sectionTime.startTime,
+    newEndTime: sectionTime.endTime,
+    newStartDate: sectionTime.startDate,
+    newEndDate: sectionTime.endDate,
+    newSunday: sectionTime.sunday,
+    newMonday: sectionTime.monday,
+    newTuesday: sectionTime.tuesday,
+    newWednesday: sectionTime.wednesday,
+    newThursday: sectionTime.thursday,
+    newFriday: sectionTime.friday,
+    newSaturday: sectionTime.saturday,
+    newSemesterId: section.semesterId,
+    newRoomId: sectionTime.roomId
+  };
+
+  EditedSection.create(editedSection)
+    .then(data => {
+      //console.log(data);
+    })
+    .catch(err => {
+      console.log(err);
+    });
 };

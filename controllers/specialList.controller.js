@@ -5,8 +5,8 @@ const SpecialList = db.specialList;
 // Create and Save a new specialList
 exports.create = (req, res) => {
   const course = {
-    userId: req.params.userId,
-    courseId: req.params.courseId
+    userId: req.body.userId,
+    courseId: req.body.courseId
   };
 
   // Create and Save a new Course
