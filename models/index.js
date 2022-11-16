@@ -155,16 +155,4 @@ db.event.belongsTo(
   { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
 );
 
-//foreign keys for editedSection
-db.section.hasMany(
-  db.editedSection,
-  { as: "editedSection" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-);
-db.editedSection.belongsTo(
-  db.section,
-  { as: "section" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-);
-
 module.exports = db;

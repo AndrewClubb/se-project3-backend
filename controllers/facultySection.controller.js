@@ -5,8 +5,8 @@ const FacultySection = db.facultySection;
 // Create and Save a new facultySection
 exports.create = (req, res) => {
   const facultySection = {
-    sectionId: req.params.sectionId,
-    facultyId: req.params.facultyId
+    sectionId: req.body.sectionId,
+    facultyId: req.body.facultyId
   };
 
   // Create and Save a new facultySection

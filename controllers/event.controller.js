@@ -5,9 +5,9 @@ const Event = db.event;
 // Create and Save a new event
 exports.create = (req, res) => {
   const event = {
-    facultyId: req.params.facultyId,
-    semesterId: req.params.semesterId,
-    roomId: req.params.roomId
+    facultyId: req.body.facultyId,
+    semesterId: req.body.semesterId,
+    roomId: req.body.roomId
   };
 
   // Create and Save a new event

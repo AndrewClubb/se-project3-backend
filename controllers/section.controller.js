@@ -14,8 +14,8 @@ exports.create = (req, res) => {
 
   const section = {
     number: req.body.number,
-    courseId: req.params.courseId,
-    semesterId: req.params.semesterId
+    courseId: req.body.courseId,
+    semesterId: req.body.semesterId
   };
 
   // Create and Save a new section
