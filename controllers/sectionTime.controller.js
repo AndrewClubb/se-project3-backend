@@ -3,6 +3,8 @@ const { Op } = require("sequelize");
 const Section = db.section;
 const SectionTime = db.sectionTime;
 const EditedSection = db.editedSection;
+const Room = db.room;
+const Course = db.course;
 
 // Create and Save a new sectionTime
 exports.create = (req, res) => {
@@ -61,7 +63,7 @@ exports.create = (req, res) => {
 };
 
 async function editedSectionCreate(sectionTime) {
-  var section;
+  var section, roomNumber, courseNumber;
 
   await Section.findByPk(sectionTime.sectionId)
     .then(data => {
@@ -71,8 +73,24 @@ async function editedSectionCreate(sectionTime) {
       console.log(err);
     });
 
+  await Room.findByPk(sectionTime.roomId)
+    .then(data => {
+      roomNumber = data.dataValues.number;
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
+  await Course.findByPk(section.courseId)
+    .then(data => {
+      courseNumber = data.dataValues.number;
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
   const editedSection = {
-    sectionId: sectionTime.sectionId,
+    courseNumber: courseNumber,
     crudOperation: "Added",
     newNumber: section.number,
     newStartTime: sectionTime.startTime,
@@ -86,14 +104,10 @@ async function editedSectionCreate(sectionTime) {
     newThursday: sectionTime.thursday,
     newFriday: sectionTime.friday,
     newSaturday: sectionTime.saturday,
-    newSemesterId: section.semesterId,
-    newRoomId: sectionTime.roomId
+    newRoom: roomNumber
   };
 
   EditedSection.create(editedSection)
-    .then(data => {
-      //console.log(data);
-    })
     .catch(err => {
       console.log(err);
     });
@@ -137,6 +151,11 @@ exports.findById = (req, res) => {
 exports.update = async (req, res) => {
   const id = req.params.id;
 
+  var sectionTime;
+  if(req.body.startTime != null && req.body.startTime != undefined) {
+    sectionTime.startTime = req.body.startTime;
+  }
+
   await editedSectionUpdate(id, req.body);
 
   SectionTime.update(req.body, {
@@ -161,7 +180,15 @@ exports.update = async (req, res) => {
 };
 
 async function editedSectionUpdate(sectionTimeId, body) {
-  var section;
+  var sectionTime, section, roomNumber, courseNumber;
+
+  await SectionTime.findByPk(sectionTimeId)
+    .then(data => {
+      sectionTime = data.dataValues;
+    })
+    .catch(err => {
+      console.log(err);
+    });
 
   await Section.findByPk(sectionTime.sectionId)
     .then(data => {
@@ -171,29 +198,77 @@ async function editedSectionUpdate(sectionTimeId, body) {
       console.log(err);
     });
 
+  await Room.findByPk(sectionTime.roomId)
+    .then(data => {
+      roomNumber = data.dataValues.number;
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  
+  await Course.findByPk(section.courseId)
+    .then(data => {
+      courseNumber = data.dataValues.number;
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
   const editedSection = {
-    sectionId: sectionTime.sectionId,
-    crudOperation: "Added",
-    newNumber: section.number,
-    newStartTime: sectionTime.startTime,
-    newEndTime: sectionTime.endTime,
-    newStartDate: sectionTime.startDate,
-    newEndDate: sectionTime.endDate,
-    newSunday: sectionTime.sunday,
-    newMonday: sectionTime.monday,
-    newTuesday: sectionTime.tuesday,
-    newWednesday: sectionTime.wednesday,
-    newThursday: sectionTime.thursday,
-    newFriday: sectionTime.friday,
-    newSaturday: sectionTime.saturday,
-    newSemesterId: section.semesterId,
-    newRoomId: sectionTime.roomId
+    courseNumber: courseNumber,
+    crudOperation: "Updated"
   };
 
+  if(body.startTime != null && sectionTime.startTime != body.startTime) {
+    editedSection.oldStartTime = sectionTime.startTime;
+    editedSection.newStartTime = body.startTime;
+  }
+  if(body.endTime != null && sectionTime.endTime != body.endTime){
+    editedSection.oldEndTime = sectionTime.endTime;
+    editedSection.newEndTime = body.endTime;
+  }
+  if(body.startDate != null && sectionTime.startDate != body.startDate) {
+    editedSection.oldStartDate = sectionTime.startDate;
+    editedSection.newStartDate = body.startDate;
+  }
+  if(body.endDate != null && sectionTime.endDate != body.endDate) {
+    editedSection.oldEndDate = sectionTime.endDate;
+    editedSection.newEndDate = body.endDate;
+  }
+  if(body.sunday != null && sectionTime.sunday != body.sunday) {
+    editedSection.oldSunday = sectionTime.sunday;
+    editedSection.newSunday = body.sunday;
+  }
+  if(body.monday != null && sectionTime.monday != body.monday) {
+    editedSection.oldMonday = sectionTime.monday;
+    editedSection.newMonday = body.monday;
+  }
+  if(body.tuesday != null && sectionTime.tuesday != body.tuesday) {
+    editedSection.oldTuesday = sectionTime.tuesday;
+    editedSection.newTuesday = body.tuesday;
+  }
+  if(body.wednesday != null && sectionTime.wednesday != body.wednesday) {
+    editedSection.oldWednesday = sectionTime.wednesday;
+    editedSection.newWednesday = body.wednesday;
+  }
+  if(body.thursday != null && sectionTime.thursday != body.thursday) {
+    editedSection.oldThursday = sectionTime.thursday;
+    editedSection.newThursday = body.thursday;
+  }
+  if(body.friday != null && sectionTime.friday != body.friday) {
+    editedSection.oldFriday = sectionTime.friday;
+    editedSection.newFriday = body.friday;
+  }
+  if(body.saturday != null && sectionTime.saturday != body.saturday) {
+    editedSection.oldSaturday = sectionTime.saturday;
+    editedSection.newSaturday = body.saturday;
+  }
+  if(body.roomNumber != null && roomNumber != body.roomNumber) {
+    editedSection.oldRoomNumber = roomNumber;
+    editedSection.newRoomNumber = body.roomNumber;
+  }
+
   EditedSection.create(editedSection)
-    .then(data => {
-      //console.log(data);
-    })
     .catch(err => {
       console.log(err);
     });
@@ -202,6 +277,8 @@ async function editedSectionUpdate(sectionTimeId, body) {
 // Delete a sectionTime with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
+
+
   SectionTime.destroy({
     where: { id: id }
   })
@@ -218,7 +295,7 @@ exports.delete = (req, res) => {
   })
 };
 
-async function editedSectionDelete(sectionTime) {
+async function editedSectionDelete(sectionTimeId) {
   var section;
 
   await Section.findByPk(sectionTime.sectionId)

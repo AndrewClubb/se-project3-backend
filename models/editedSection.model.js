@@ -5,13 +5,14 @@ module.exports = (sequelize, Sequelize) => {
       autoIncrement: true,
       primaryKey: true,
       unique: true
+    },    
+    courseNumber: {
+      type: Sequelize.STRING,
+      allowNull: false
     },
     crudOperation: {
       type: Sequelize.STRING,
       allowNull: false
-    },
-    oldNumber: {
-      type: Sequelize.STRING
     },
     oldStartTime: {
       type: Sequelize.TIME
@@ -46,13 +47,7 @@ module.exports = (sequelize, Sequelize) => {
     oldSaturday: {
       type: Sequelize.BOOLEAN
     },
-    oldSemesterId: {
-      type: Sequelize.STRING
-    },
-    oldRoomId: {
-      type: Sequelize.STRING
-    },    
-    newNumber: {
+    oldRoom: {
       type: Sequelize.STRING
     },
     newStartTime: {
@@ -88,10 +83,7 @@ module.exports = (sequelize, Sequelize) => {
     newSaturday: {
       type: Sequelize.BOOLEAN
     },
-    newSemesterId: {
-      type: Sequelize.STRING
-    },
-    newRoomId: {
+    newRoom: {
       type: Sequelize.STRING
     },
   },

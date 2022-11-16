@@ -5,9 +5,8 @@ const EditedSection = db.editedSection;
 // Create and Save a new editedSection
 exports.create = (req, res) => {
   const editedSection = {
-    sectionId: req.body.sectionId,
+    sectionNumber: req.body.sectionNumber,
     crudOperation: req.body.crudOperation,
-    oldNumber: req.body.oldNumber,
     oldStartTime: req.body.oldStartTime,
     oldEndTime: req.body.oldEndTime,
     oldStartDate: req.body.oldStartDate,
@@ -19,9 +18,7 @@ exports.create = (req, res) => {
     oldThursday: req.body.oldThursday,
     oldFriday: req.body.oldFriday,
     oldSaturday: req.body.oldSaturday,
-    oldSemesterId: req.body.oldSemesterId,
-    oldRoomId: req.body.oldRoomId,
-    newNumber: req.body.newNumber,
+    oldRoom: req.body.oldRoom,
     newStartTime: req.body.newStartTime,
     newEndTime: req.body.newEndTime,
     newStartDate: req.body.newStartDate,
@@ -33,8 +30,7 @@ exports.create = (req, res) => {
     newThursday: req.body.newThursday,
     newFriday: req.body.newFriday,
     newSaturday: req.body.newSaturday,
-    newSemesterId: req.body.newSemesterId,
-    newRoomId: req.body.newRoomId
+    newRoom: req.body.newRoom
   };
 
   // Create and Save a new editedSection
